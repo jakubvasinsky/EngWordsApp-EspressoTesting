@@ -30,7 +30,7 @@ public abstract class WordsDatabase extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             WordsDatabase.class, "words")
-                         //   .addCallback(callback)   // vtedy ak sa to otvory automaticky sa spusti callbac k
+                      //    .addCallback(callback)   // vtedy ak sa to otvory automaticky sa spusti callbac k
                             .build();
                 }
             }

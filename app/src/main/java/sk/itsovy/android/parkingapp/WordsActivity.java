@@ -14,7 +14,7 @@ import android.view.MenuItem;
 
 import java.util.List;
 
-public class WordsActivity extends AppCompatActivity implements OnPlateClickListener {
+public class WordsActivity extends AppCompatActivity implements OnWordClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,26 +23,27 @@ public class WordsActivity extends AppCompatActivity implements OnPlateClickList
 
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        VehiclesAdapter adapter = new VehiclesAdapter();
-        adapter.setOnPlateClickListener(this);
+        WordsAdapter adapter = new WordsAdapter();
+        //adapter.setOnPlateClickListener(this);
+        adapter.setOnWordClickListener(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         ViewModelProvider provider = new ViewModelProvider(this);
-        VehiclesViewModel vehiclesViewModel = provider.get(VehiclesViewModel.class);
-        vehiclesViewModel.getVehicles().observe(this, new Observer<List<Vehicle>>() {
+        WordsViewModel wordsViewModel = provider.get(WordsViewModel.class);
+        wordsViewModel.getWords().observe(this, new Observer<List<Word>>() {
             @Override
-            public void onChanged(List<Vehicle> vehicles) {
-                adapter.setCachedVehicles(vehicles);
+            public void onChanged(List<Word> vehicles) {
+                adapter.setCachedWords(vehicles);
             }
         });
 
     }
-    private void processFabClick() {
+   /* private void processFabClick() {
         DialogFragment insertDialogFragment = new InsertDialogFragment();
         insertDialogFragment.show(getSupportFragmentManager(), "insert");
 
-    }
+    }*/
 
 
 
@@ -68,13 +69,11 @@ public class WordsActivity extends AppCompatActivity implements OnPlateClickList
         return super.onOptionsItemSelected(item);
     }
 
+
     @Override
-    public void onPlateClick(Vehicle vehicle) {
+    public void OnWordClick(Word word) {
         ViewModelProvider provider = new ViewModelProvider(this);
-        VehiclesViewModel vehiclesViewModel = provider.get(VehiclesViewModel.class);
-
-        //TODO urobit select a spocitat cenu parkovania
-
-        vehiclesViewModel.delete(vehicle);
+        WordsViewModel wordsViewModel = provider.get(WordsViewModel.class);
+        wordsViewModel.delete(word);
     }
 }

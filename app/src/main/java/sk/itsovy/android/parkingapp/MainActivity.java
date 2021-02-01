@@ -27,7 +27,7 @@ import android.widget.Toast;
 import java.sql.Timestamp;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements OnPlateClickListener{
+public class MainActivity extends AppCompatActivity  {
 
 
     private Button btnAdd, btnViewData, btnSearch;
@@ -88,11 +88,11 @@ public class MainActivity extends AppCompatActivity implements OnPlateClickListe
         });*/
     }
 
-    private void processFabClick() {
+    /*private void processFabClick() {
         DialogFragment insertDialogFragment = new InsertDialogFragment();
         insertDialogFragment.show(getSupportFragmentManager(), "insert");
 
-    }
+    }*/
 
 
 
@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements OnPlateClickListe
 
         return super.onOptionsItemSelected(item);
     }
-
+/*
     @Override
     public void onPlateClick(Vehicle vehicle) {
         ViewModelProvider provider = new ViewModelProvider(this);
@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements OnPlateClickListe
         //TODO urobit select a spocitat cenu parkovania
 
         vehiclesViewModel.delete(vehicle);
-    }
+    }*/
     /**
      * customizable toast
      *

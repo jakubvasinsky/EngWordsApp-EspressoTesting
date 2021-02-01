@@ -1,39 +1,36 @@
 package sk.itsovy.android.parkingapp;
-
 import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
-import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import java.sql.Timestamp;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Vehicle.class}, version = 1, exportSchema = false)
-@TypeConverters({Converters.class})
-public abstract class VehiclesDatabase extends RoomDatabase {
+@Database(entities = {Word.class}, version = 1, exportSchema = false)
+public abstract class WordsDatabase extends RoomDatabase {
 
-    // abstraktna metoda
-    public abstract VehiclesDao vehiclesDao();
+             // abstraktna trieda
+    public abstract WordDao wordDao();
 
-    // instancne premenne
-    private static volatile VehiclesDatabase INSTANCE;
-    private static final int NUMBER_OF_THREADS = 4;
+    private static volatile WordsDatabase INSTANCE;
+
+    // vlakna
+    private static final int NUMBER_OF_THREADS = 4; // 4 pracovnici
     static final ExecutorService databaseWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
-    // staticka metoda
-    static VehiclesDatabase getDatabase(final Context context) {
+
+    static WordsDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
-            synchronized (VehiclesDatabase.class) {
+            synchronized (WordsDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            VehiclesDatabase.class, "vehicles_database")
-                            .addCallback(callback)
+                            WordsDatabase.class, "words")
+                         //   .addCallback(callback)   // vtedy ak sa to otvory automaticky sa spusti callbac k
                             .build();
                 }
             }
@@ -41,26 +38,23 @@ public abstract class VehiclesDatabase extends RoomDatabase {
         return INSTANCE;
     }
 
-    // instancna premenna
+
     private static RoomDatabase.Callback callback = new RoomDatabase.Callback() {
         @Override
         public void onOpen(@NonNull SupportSQLiteDatabase db) {
             super.onOpen(db);
 
             databaseWriteExecutor.execute(()-> {
-                VehiclesDao dao = INSTANCE.vehiclesDao();
+                WordDao dao = INSTANCE.wordDao();
                 // ak to tu nie je tak vytvori sa 4x resp. podla poctu vlakien
                 dao.deleteAll();
 
-                Vehicle v1 = new Vehicle();
-                v1.setPlate("KE123AA");
-                v1.setTimestamp(new Timestamp(System.currentTimeMillis()));
+                Word v1 = new Word();
+                v1.setNameWord("Apples");
+               // v1.setTimestamp(new Timestamp(System.currentTimeMillis()));
                 dao.insert(v1);
 
-                Vehicle v2 = new Vehicle();
-                v2.setPlate("KE256GB");
-                v2.setTimestamp(new Timestamp(System.currentTimeMillis()));
-                dao.insert(v2);
+
             });
         }
     };

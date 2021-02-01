@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animationCache="?android:attr/windowOverscan"
     tools:context=".MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -20,7 +21,7 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-   <!-- <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <!-- <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -30,40 +31,44 @@
 
 
     <RelativeLayout
+        android:id="@+id/activity_main_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/activity_main_layout"
-        tools:ignore="MissingConstraints"
-        android:layout_marginTop="60dp">
+        android:layout_marginTop="60dp"
+        tools:ignore="MissingConstraints">
 
         <RelativeLayout
+            android:id="@+id/relativeLayout1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/relativeLayout1"
             tools:ignore="MissingConstraints">
 
             <Button
                 android:id="@+id/btnSearch"
-                android:layout_width="wrap_content"
+                style="@android:style/Widget.Material.Button.Inset"
+                android:layout_width="71dp"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/inputParameter"
 
-                android:layout_marginStart="3dp"
-                android:layout_marginBottom="-1dp"
+                android:layout_alignBottom="@+id/inputParameter"
+                android:layout_marginStart="5dp"
+                android:layout_marginBottom="2dp"
                 android:layout_toEndOf="@+id/inputParameter"
-                android:text="Search" />
+
+                android:background="@android:drawable/ic_menu_search"
+                android:backgroundTintMode="screen"
+                android:foregroundTint="#CAA8A8" />
 
             <EditText
                 android:id="@+id/inputParameter"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
+                android:layout_marginBottom="20dp"
+                android:autofillHints=""
+
                 android:gravity="center"
                 android:inputType="textCapCharacters"
-
-                android:layout_marginBottom="20dp"
-                android:textAlignment="center"
-                android:autofillHints="" />
+                android:textAlignment="center" />
 
 
         </RelativeLayout>
@@ -77,6 +82,7 @@
 
             <Button
                 android:id="@+id/btnAdd"
+                style="@android:style/Widget.DeviceDefault.Button.Inset"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="70dp"
@@ -84,6 +90,7 @@
 
             <Button
                 android:id="@+id/btnView"
+                style="@android:style/Widget.DeviceDefault.Button.Inset"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="84dp"
@@ -120,8 +127,6 @@
             app:layout_constraintTop_toBottomOf="@+id/relativeLayout">
 
 
-
-
             <androidx.core.widget.NestedScrollView
                 android:id="@+id/nestedScrollView"
                 android:layout_width="match_parent"
@@ -142,10 +147,6 @@
     </RelativeLayout>
 
 
-
-
-
-
-   <!-- <include layout="@layout/content_main" />-->
+    <!-- <include layout="@layout/content_main" />-->
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,77 +1,27 @@
 package sk.itsovy.android.parkingapp;
 
-import android.content.Intent;
-import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.View;
-
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import java.sql.Timestamp;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements OnPlateClickListener{
+public class WordsActivity extends AppCompatActivity implements OnPlateClickListener {
 
-
-    private Button btnAdd, btnViewData, btnSearch;
-    private EditText inputParameter;
-    private TextView textViewResult, searchingParameter;
-    private NestedScrollView scrollView;
-    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        btnAdd = (Button) findViewById(R.id.btnAdd);
-        btnViewData = (Button) findViewById(R.id.btnView);
-        btnSearch = (Button) findViewById(R.id.btnSearch);
-        textViewResult = findViewById(R.id.text_view_result);    // response json
-        inputParameter = findViewById(R.id.inputParameter);
-        searchingParameter = findViewById(R.id.searchingParameter);
-        scrollView = findViewById(R.id.nestedScrollView);
+        setContentView(R.layout.activity_words);
 
 
-
-        btnViewData.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                toastMessage("click button view data");
-                Intent intent = new Intent(MainActivity.this, WordsActivity.class);
-                startActivity(intent);
-
-            }
-        });
-        /*
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                processFabClick();
-            }
-        });*/
-
-/*
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         VehiclesAdapter adapter = new VehiclesAdapter();
         adapter.setOnPlateClickListener(this);
@@ -85,9 +35,9 @@ public class MainActivity extends AppCompatActivity implements OnPlateClickListe
             public void onChanged(List<Vehicle> vehicles) {
                 adapter.setCachedVehicles(vehicles);
             }
-        });*/
-    }
+        });
 
+    }
     private void processFabClick() {
         DialogFragment insertDialogFragment = new InsertDialogFragment();
         insertDialogFragment.show(getSupportFragmentManager(), "insert");
@@ -126,13 +76,5 @@ public class MainActivity extends AppCompatActivity implements OnPlateClickListe
         //TODO urobit select a spocitat cenu parkovania
 
         vehiclesViewModel.delete(vehicle);
-    }
-    /**
-     * customizable toast
-     *
-     * @param message
-     */
-    private void toastMessage(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }

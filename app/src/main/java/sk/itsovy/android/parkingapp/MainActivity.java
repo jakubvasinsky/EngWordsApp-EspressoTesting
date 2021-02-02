@@ -234,6 +234,8 @@ public class MainActivity extends AppCompatActivity {
                 toastMessage("click button view data");
                 Intent intent = new Intent(MainActivity.this, WordsActivity.class);
                 startActivity(intent);
+                
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 
             }
         });

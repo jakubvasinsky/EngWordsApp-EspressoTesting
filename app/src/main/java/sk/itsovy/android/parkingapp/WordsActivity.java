@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -72,8 +73,22 @@ public class WordsActivity extends AppCompatActivity implements OnWordClickListe
 
     @Override
     public void OnWordClick(Word word) {
-        ViewModelProvider provider = new ViewModelProvider(this);
+       /* ViewModelProvider provider = new ViewModelProvider(this);
         WordsViewModel wordsViewModel = provider.get(WordsViewModel.class);
-        wordsViewModel.delete(word);
+        wordsViewModel.delete(word);*/
+
+        Intent oneWordScreen = new Intent(WordsActivity.this, OneWordActivity.class);
+        oneWordScreen.putExtra("id_word", word.getId());
+        oneWordScreen.putExtra("name_word", word.getNameWord());
+
+        startActivity(oneWordScreen);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);// animation
+
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 }

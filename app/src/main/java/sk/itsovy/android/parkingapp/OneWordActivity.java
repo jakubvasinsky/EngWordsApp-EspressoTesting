@@ -24,14 +24,16 @@ public class OneWordActivity extends AppCompatActivity {
         oneWord = findViewById(R.id.selectedWord);
         btnDelete = findViewById(R.id.btnDelete);
         //get the intent extra from the ListDataActivity
+
+
         Intent receivedIntent = getIntent();
         selectedWord = receivedIntent.getStringExtra("name_word");
-
+           //todo save also intent id for deleting
         toastMessage("sending word is " + selectedWord);
         oneWord.setText(selectedWord);
 
 
-
+      /// todo show also id of this word
 
 
         btnDelete.setOnClickListener(v -> toastMessage("delete word function "));

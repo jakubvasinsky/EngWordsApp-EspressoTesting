@@ -19,8 +19,10 @@ import android.view.View;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText inputParameter;
     private TextView textViewResult, searchingParameter;
     private NestedScrollView scrollView;
+    ListView listView;
+    ArrayAdapter wordArrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,10 +63,13 @@ public class MainActivity extends AppCompatActivity {
         btnAdd = (Button) findViewById(R.id.btnAdd);
         btnViewData = (Button) findViewById(R.id.btnView);
         btnSearch = (Button) findViewById(R.id.btnSearch);
-        textViewResult = findViewById(R.id.text_view_result);    // response json
+        //textViewResult = findViewById(R.id.text_view_result);    // response json
         inputParameter = findViewById(R.id.inputParameter);
         searchingParameter = findViewById(R.id.searchingParameter);
-        scrollView = findViewById(R.id.nestedScrollView);
+      //  scrollView = findViewById(R.id.nestedScrollView);
+
+
+        listView = findViewById(R.id.wordsRecyclerView);
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://api.dictionaryapi.dev/")
@@ -175,10 +182,24 @@ public class MainActivity extends AppCompatActivity {
                             for (int i = 0; i < ArrayObject.length; i++) {
                                 System.out.println(ArrayObject[i]);
                             }
+                            System.out.println("''''''''''''''''''''''''''''''''''''''''''''''''''''");
 
-                            textViewResult.setText(jsonArray2.toString());
+                            List<String> resultList = new ArrayList<>();
+                            for (int i = 0; i <list.size() ; i++) {
 
-                            //textViewResult.setText(list.toString());
+                                System.out.println(list.get(i).toString().replaceAll("([{,}\"])", ""));
+                                resultList.add(list.get(i).toString().replaceAll("([{,}\"])", ""));
+                                
+                            }
+                            System.out.println("''''''''''''''''''''''''''''''''''''''''''''''''''''");
+
+                            //textViewResult.setText(jsonArray2.toString());
+
+                           // textViewResult.setText(list.toString().replaceAll("([{,}\"])", ""));
+
+                            wordArrayAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, resultList);
+                            listView.setAdapter(wordArrayAdapter);
+
 
                         } catch (JSONException | IOException e) {
                             e.printStackTrace();
@@ -189,7 +210,7 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
-                        textViewResult.setText(t.getMessage());
+                        //textViewResult.setText(t.getMessage());
 
                     }
 

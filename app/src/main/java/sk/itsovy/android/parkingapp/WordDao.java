@@ -33,5 +33,4 @@ public interface WordDao {
     @Query("DELETE FROM words WHERE word=:word")
     void deleteWord(String word);
 
-    // todo add function deleteWOrds according to input Parameter from layout
 }

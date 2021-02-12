@@ -1,5 +1,6 @@
 package sk.itsovy.android.parkingapp;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -46,12 +47,14 @@ public class MainActivity extends AppCompatActivity {
 
 
     private Button btnAdd, btnViewData, btnSearch;
-    private EditText inputParameter;
+    private EditText inputParameter,pronounceParamter;
+
     private TextView textViewResult, searchingParameter;
     private NestedScrollView scrollView;
     ListView listView;
     ArrayAdapter wordArrayAdapter;
 
+    @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
         btnSearch = (Button) findViewById(R.id.btnSearch);
         //textViewResult = findViewById(R.id.text_view_result);    // response json
         inputParameter = findViewById(R.id.inputParameter);
+       // pronounceParamter = findViewById(R.id.pronounceParameter);
         searchingParameter = findViewById(R.id.searchingParameter);
       //  scrollView = findViewById(R.id.nestedScrollView);
 
@@ -85,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("input paramter " + inputParameter.getText().toString());
                 System.out.println("input paramter " + inputWord);
 
-                searchingParameter.setText(inputWord);
+
 
                 JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
                 Call<ResponseBody> call = jsonPlaceHolderApi.getStringResponse2(inputWord);
@@ -104,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
 
                         try {
                             //      JSONArray jsonArray1 = new JSONArray(response.body().toString());
+                         //  json array2 begin here
                             JSONArray jsonArray2 = new JSONArray(response.body().string());
 
                             Object phonetics = jsonArray2.getJSONObject(0).get("phonetics");
@@ -111,6 +116,9 @@ public class MainActivity extends AppCompatActivity {
 
                             JSONArray jsonArray = (JSONArray) jsonArray2.getJSONObject(0).get("phonetics");
                             JSONArray jsonArrMeanings = (JSONArray) jsonArray2.getJSONObject(0).get("meanings");
+
+                            String inputPronounce = (String) jsonArray.getJSONObject(0).get("text");
+
 
                             System.out.println("size meanings");
                             System.out.println(jsonArrMeanings.length());
@@ -199,12 +207,18 @@ public class MainActivity extends AppCompatActivity {
 
                             wordArrayAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, resultList);
                             listView.setAdapter(wordArrayAdapter);
+                            
+                            String mixInputWord = inputWord + "  " + inputPronounce;
+                            searchingParameter.setText(mixInputWord);
 
+                            //   pronounceParamter.setText(inputPronounce);
+                            
 
                         } catch (JSONException | IOException e) {
                             e.printStackTrace();
                         }
-
+                                              // todo list save Json Objects into database   , saving into  database
+                        // todo show saving data into Words Activity
 
                     }
 

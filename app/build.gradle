@@ -34,6 +34,8 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui:2.3.0'
     implementation 'androidx.recyclerview:recyclerview-selection:1.0.0'
     implementation 'com.google.code.gson:gson:2.8.6'
+
+
     implementation 'com.squareup.retrofit2:converter-gson:2.7.2'
     implementation 'com.squareup.retrofit2:retrofit:2.7.2'
     implementation 'com.squareup.retrofit2:converter-scalars:2.5.0'
@@ -57,5 +59,6 @@ dependencies {
 // Testing
     androidTestImplementation "androidx.arch.core:core-testing:$rootProject.coreTestingVersion"
 
-
+     // todo 2>30 compile prdanie adresarov
+    
 }

@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText inputParameter,pronounceParamter;
 
     private TextView textViewResult, searchingParameter;
+    private String jsonArrayString;
     private NestedScrollView scrollView;
     ListView listView;
     ArrayAdapter wordArrayAdapter;
@@ -109,7 +110,8 @@ public class MainActivity extends AppCompatActivity {
                         try {
                             //      JSONArray jsonArray1 = new JSONArray(response.body().toString());
                          //  json array2 begin here
-                            JSONArray jsonArray2 = new JSONArray(response.body().string());
+                           jsonArrayString =    response.body().string();
+                            JSONArray jsonArray2 = new JSONArray(jsonArrayString);
 
                             Object phonetics = jsonArray2.getJSONObject(0).get("phonetics");
                             Object meanings = jsonArray2.getJSONObject(0).get("meanings");
@@ -139,10 +141,13 @@ public class MainActivity extends AppCompatActivity {
                             JSONArray jsonArray1 = new JSONArray();
                             List<JSONObject> list = new ArrayList<>();
                             Object[] ArrayObject = new Object[lengthOfDefinitions];
+                            JSONArray jsonArraySynonyms = new JSONArray();
 
 
                             //
                             for (int i = 0; i < lengthOfDefinitions; i++) {
+
+
                                 JSONObject jsonObject = new JSONObject();
                                 System.out.println("-------------------------------------");
                                 System.out.println("dlzka " + jsonArrMeaningsDefinitions.getJSONObject(i).get("definition").toString().length());
@@ -162,8 +167,18 @@ public class MainActivity extends AppCompatActivity {
                                 if (!jsonArrMeaningsDefinitions.getJSONObject(i).isNull("synonyms")) {
                                     //JSONArray jsonArrSynonyms= (JSONArray) jsonArrMeanings.getJSONObject(0).get("synonyms");
                                     System.out.println("synonyms");
+                                    System.out.println("synonyms");
                                     System.out.println(jsonArrMeaningsDefinitions.getJSONObject(i).get("synonyms"));
+                                    jsonArraySynonyms = (JSONArray) jsonArrMeaningsDefinitions.getJSONObject(i).get("synonyms");
 
+                                    System.out.println("synonyms are here man");
+
+                                    for (int j = 0; j <jsonArraySynonyms.length() ; j++) {
+                                        System.out.println("=[=[=[=[=[=[=[=");
+                                        System.out.println(jsonArraySynonyms.get(j));
+                                        System.out.println("=[=[=[=[=[=[=[=");
+                                    }
+                                    System.out.println(jsonArraySynonyms);
                                 }
                                 System.out.println("-------------------------------------");
                                 System.out.println("vklad poziciiu " + i);
@@ -199,6 +214,14 @@ public class MainActivity extends AppCompatActivity {
                                 resultList.add(list.get(i).toString().replaceAll("([{,}\"])", ""));
                                 
                             }
+
+                            resultList.add("");
+                            resultList.add("Synonyms  " + jsonArraySynonyms.toString().replaceAll("([{}\"])", " "));
+
+                            /*
+                            for (int j = 0; j <jsonArraySynonyms.length() ; j++) {
+                                resultList.add(jsonArraySynonyms.get(j).toString());
+                            }*/
                             System.out.println("''''''''''''''''''''''''''''''''''''''''''''''''''''");
 
                             //textViewResult.setText(jsonArray2.toString());
@@ -249,6 +272,8 @@ public class MainActivity extends AppCompatActivity {
                     String inputWord = inputParameter.getText().toString();
                     Word word = new Word();
                     word.setNameWord(inputWord);
+                    System.out.println("ukladanie json string" + jsonArrayString);
+                    word.setExampleValue(jsonArrayString);
 
                     viewModel.insert(word);
 

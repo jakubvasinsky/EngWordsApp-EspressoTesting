@@ -16,6 +16,21 @@ public class Word {
     @ColumnInfo(name = "word")
     private String nameWord;
 
+
+    @NonNull
+    @ColumnInfo(name = "example")
+    private String exampleValue;
+
+
+    @NonNull
+    public String getExampleValue() {
+        return exampleValue;
+    }
+
+    public void setExampleValue(@NonNull String exampleValue) {
+        this.exampleValue = exampleValue;
+    }
+
     public int getId() {
         return id;
     }

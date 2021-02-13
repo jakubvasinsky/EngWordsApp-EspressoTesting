@@ -10,7 +10,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Word.class}, version = 1, exportSchema = false)
+@Database(entities = {Word.class}, version = 2, exportSchema = false)
 public abstract class WordsDatabase extends RoomDatabase {
 
              // abstraktna trieda
@@ -30,7 +30,7 @@ public abstract class WordsDatabase extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             WordsDatabase.class, "words")
-                      //    .addCallback(callback)   // vtedy ak sa to otvory automaticky sa spusti callbac k
+                               .addCallback(callback)   // vtedy ak sa to otvory automaticky sa spusti callbac k
                             .build();
                 }
             }
@@ -51,6 +51,7 @@ public abstract class WordsDatabase extends RoomDatabase {
 
                 Word v1 = new Word();
                 v1.setNameWord("Apples");
+                v1.setExampleValue("Hello");
                // v1.setTimestamp(new Timestamp(System.currentTimeMillis()));
                 dao.insert(v1);
 

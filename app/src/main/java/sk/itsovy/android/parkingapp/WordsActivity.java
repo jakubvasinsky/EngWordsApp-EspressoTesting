@@ -80,6 +80,7 @@ public class WordsActivity extends AppCompatActivity implements OnWordClickListe
         Intent oneWordScreen = new Intent(WordsActivity.this, OneWordActivity.class);
         oneWordScreen.putExtra("id_word", word.getId());
         oneWordScreen.putExtra("name_word", word.getNameWord());
+        oneWordScreen.putExtra("examples", word.getExampleValue());
 
         startActivity(oneWordScreen);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);// animation

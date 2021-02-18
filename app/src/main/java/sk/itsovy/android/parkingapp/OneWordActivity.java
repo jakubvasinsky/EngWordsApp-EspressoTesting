@@ -1,6 +1,7 @@
 package sk.itsovy.android.parkingapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -64,6 +65,13 @@ public class OneWordActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 toastMessage("Click delete word ");
+
+                ViewModelProvider provider = new ViewModelProvider(OneWordActivity.this);
+                WordsViewModel wordsViewModel = provider.get(WordsViewModel.class);
+                wordsViewModel.deleteWord(selectedWord);
+
+                Intent intent = new Intent(OneWordActivity.this, MainActivity.class);
+                startActivity(intent);
                 
             }
         });

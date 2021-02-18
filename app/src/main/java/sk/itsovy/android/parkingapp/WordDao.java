@@ -33,4 +33,7 @@ public interface WordDao {
     @Query("DELETE FROM words WHERE word=:word")
     void deleteWord(String word);
 
+
+    @Query("DELETE FROM words WHERE word=:nameWord")
+    void deleteWordString(String nameWord);
 }

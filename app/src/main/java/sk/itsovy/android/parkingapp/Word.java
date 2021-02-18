@@ -3,9 +3,12 @@ package sk.itsovy.android.parkingapp;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "words")
+        //    @Entity(tableName = "weather_result",indices = {@Index(value = {"id"}, unique = true)}
+//@Entity(tableName = "words")
+@Entity(tableName = "words", indices = {@Index(value = {"word"}, unique = true)})
 public class Word {
 
     @PrimaryKey(autoGenerate = true)

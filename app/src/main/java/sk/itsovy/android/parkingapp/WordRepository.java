@@ -44,4 +44,13 @@ public class WordRepository {
                 }
         );
     }
+
+    public void deleteWord(String nameWord) {
+        WordsDatabase.databaseWriteExecutor.execute(
+                () -> {
+                    wordDao.deleteWordString(nameWord);
+                }
+        );
+
+    }
 }

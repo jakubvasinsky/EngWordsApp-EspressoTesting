@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar);                           
 
         btnAdd = (Button) findViewById(R.id.btnAdd);
         btnViewData = (Button) findViewById(R.id.btnView);
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         //textViewResult = findViewById(R.id.text_view_result);    // response json
         inputParameter = findViewById(R.id.inputParameter);
        // pronounceParamter = findViewById(R.id.pronounceParameter);
-        searchingParameter = findViewById(R.id.searchingParameter);
+        searchingParameter = (TextView)findViewById(R.id.searchingParameter);
       //  scrollView = findViewById(R.id.nestedScrollView);
 
 
@@ -90,7 +90,15 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("input paramter " + inputParameter.getText().toString());
                 System.out.println("input paramter " + inputWord);
 
+                if (inputWord.length() < 1) {
+                    searchingParameter.setText("Empty input");
+                    toastMessage("Empty parameter");
 
+                    
+
+
+                    return;
+                }
 
                 JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
                 Call<ResponseBody> call = jsonPlaceHolderApi.getStringResponse2(inputWord);
@@ -99,7 +107,18 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         if (!response.isSuccessful()) {
-                            textViewResult.setText("Code: " + response.code());
+                            System.out.println("code " + response.code());
+                            //textViewResult.setText("Code: " + response.code());
+                            //textViewResult.setText("Nothing");
+
+                            searchingParameter.setText("INVALID");
+                            List<String> resultList = new ArrayList<>();
+                            resultList.add("Parameter does not exist ");
+                            resultList.add("no examples");
+                            
+
+                            wordArrayAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, resultList);
+                            listView.setAdapter(wordArrayAdapter);
                             return;
                         }
 
@@ -212,7 +231,7 @@ public class MainActivity extends AppCompatActivity {
 
                                 System.out.println(list.get(i).toString().replaceAll("([{,}\"])", ""));
                                 resultList.add(list.get(i).toString().replaceAll("([{,}\"])", ""));
-                                
+
                             }
 
                             resultList.add("");
@@ -230,12 +249,12 @@ public class MainActivity extends AppCompatActivity {
 
                             wordArrayAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, resultList);
                             listView.setAdapter(wordArrayAdapter);
-                            
+
                             String mixInputWord = inputWord + "  " + inputPronounce;
-                            searchingParameter.setText(mixInputWord);
+                            searchingParameter.setText(mixInputWord.toUpperCase());
 
                             //   pronounceParamter.setText(inputPronounce);
-                            
+
 
                         } catch (JSONException | IOException e) {
                             e.printStackTrace();
@@ -271,17 +290,19 @@ public class MainActivity extends AppCompatActivity {
 
                     String inputWord = inputParameter.getText().toString();
                     Word word = new Word();
-                    word.setNameWord(inputWord);
-                    System.out.println("ukladanie json string" + jsonArrayString);
+                    word.setNameWord(inputWord.toUpperCase());
                     word.setExampleValue(jsonArrayString);
+                    System.out.println("ukladanie json string" + jsonArrayString);
 
                     viewModel.insert(word);
 
                     //inputParameter.setText("");
-                    toastMessage("btn Add click " + inputWord);
+                    toastMessage("Save word  " + inputWord);
 
                 } else {
                     toastMessage("You must put something in the text field!");
+                    searchingParameter.setText("Empty input");
+                    
                 }
 
             }
@@ -291,7 +312,7 @@ public class MainActivity extends AppCompatActivity {
         btnViewData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                toastMessage("click button view data");
+                toastMessage("view data");
                 Intent intent = new Intent(MainActivity.this, WordsActivity.class);
                 startActivity(intent);
                 

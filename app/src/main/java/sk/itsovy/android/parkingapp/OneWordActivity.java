@@ -64,7 +64,7 @@ public class OneWordActivity extends AppCompatActivity {
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                toastMessage("Click delete word ");
+                toastMessage("Delete word  ");
 
                 ViewModelProvider provider = new ViewModelProvider(OneWordActivity.this);
                 WordsViewModel wordsViewModel = provider.get(WordsViewModel.class);
